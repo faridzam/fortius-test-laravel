@@ -29,8 +29,11 @@ Route::post('login', [AuthController::class, 'Login'])->middleware(['guest']);
 Route::middleware(['auth.cookie', 'auth:api', 'cors'])->group(function () {
     // Route::post('register', [AuthController::class, 'Register'])->middleware(['cek.module:1']);
     Route::resource('role', RoleController::class)->only([
-        'index', 'store', 'update', 'destroy'
-    ])->middleware(['cek.module:2,3,4,5']);
+        'index'
+    ])->middleware(['cek.module:2']);
+    Route::resource('role', RoleController::class)->only([
+        'store', 'update', 'destroy'
+    ])->middleware(['cek.module:3,4,5']);
     Route::resource('employee', EmployeeController::class)->only([
         'index', 'store', 'update'
     ])->middleware(['cek.module:14,15,16']);

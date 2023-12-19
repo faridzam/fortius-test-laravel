@@ -15,8 +15,8 @@ class PermissionSeeder extends Seeder
     public function run(): void
     {
         $engineerPermissionDefault = Modules::all();
-        $hrManagerPermissionDefault = Modules::whereIn('id', range(14, 17))->get();
-        $hrStaffPermissionDefault = Modules::whereIn('id', range(14, 16))->get();
+        $hrManagerPermissionDefault = Modules::whereIn('id', array_merge(range(14, 17), [2, 10]))->get();
+        $hrStaffPermissionDefault = Modules::whereIn('id', array_merge(range(14, 16), [2, 10]))->get();
 
         foreach ($engineerPermissionDefault as $value) {
             DB::table('permissions')->insert(

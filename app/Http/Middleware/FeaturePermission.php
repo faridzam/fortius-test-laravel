@@ -17,19 +17,20 @@ class FeaturePermission
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, ...$cekModule): Response
+    public function handle(Request $request, Closure $next, $cekModule1 = 0, $cekModule2 = 0, $cekModule3 = 0, $cekModule4 = 0): Response
     {
         if (Auth::check()) {
             $role = Auth::user()->role;
             $isAuthorized = Permission::where('role', $role)
-            ->whereIn('module', $cekModule)
+            ->whereIn('module', [(int)$cekModule1, (int)$cekModule2, (int)$cekModule3, (int)$cekModule4])
             ->first();
 
             if (!$isAuthorized) {
                 return $this->unauthorizedResponse("Unauthorized feature!");
             }
+        } elseif ($request->route() !== 'api/login') {
+            return $this->unauthorizedResponse("Unauthorized feature!");
         }
-
         return $next($request);
     }
 }

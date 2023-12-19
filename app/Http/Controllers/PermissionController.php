@@ -6,6 +6,7 @@ use App\Models\Modules;
 use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PermissionController extends Controller
 {
@@ -15,7 +16,7 @@ class PermissionController extends Controller
     public function index()
     {
         try {
-            $permission = Permission::all();
+            $permission = Permission::with('role', 'module')->where('role', Auth::user()->role);
 
             if ($permission && $permission->count() >= 1) {
                 return $this->successResponse($permission, 'get permission data success', 200);

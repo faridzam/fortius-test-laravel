@@ -43,7 +43,7 @@ class EmployeeController extends Controller
     public function index()
     {
         try {
-            $employees = Employee::all();
+            $employees = Employee::with('role')->get();
 
             if ($employees && $employees->count() >= 1) {
                 return $this->successResponse($employees, 'get employees data success', 200);
